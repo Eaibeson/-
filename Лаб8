@@ -1,0 +1,99 @@
+// components/ModalDemoScreen.tsx
+import React, { useState } from 'react';
+import { View, Text, Button, StyleSheet, Modal, Alert, ToastAndroid, ActivityIndicator, Platform } from 'react-native';
+
+export default function ModalDemoScreen() {
+  const [confirmVisible, setConfirmVisible] = useState(false);
+  const [errorVisible, setErrorVisible] = useState(false);
+  const [loadingVisible, setLoadingVisible] = useState(false);
+  const [pressResult, setPressResult] = useState('');
+
+  const showToast = () => {
+    if (Platform.OS === 'android') {
+      ToastAndroid.show('Something happened!', ToastAndroid.SHORT);
+    } else {
+      Alert.alert('Toast Message', 'Something happened!');
+    }
+  };
+
+  const fetchData = () => {
+    setLoadingVisible(true);
+    setTimeout(() => setLoadingVisible(false), 3000);
+  };
+
+  return (
+    <View style={styles.container}>
+      <Button title="Confirm Action" onPress={() => setConfirmVisible(true)} />
+      <Button title="Show Error" onPress={() => setErrorVisible(true)} />
+      <Button title="Toast Message" onPress={showToast} />
+      <Button title="Fetch Data…" onPress={fetchData} />
+
+      {/* Confirm Modal */}
+      <Modal visible={confirmVisible} transparent animationType="slide">
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalBox}>
+            <Text style={styles.modalTitle}>Are you sure?</Text>
+            <View style={styles.modalButtons}>
+              <Button title="Yes" onPress={() => { setConfirmVisible(false); Alert.alert('Confirmed'); }} />
+              <Button title="No" onPress={() => setConfirmVisible(false)} />
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Error Modal */}
+      <Modal visible={errorVisible} transparent animationType="fade">
+        <View style={styles.modalOverlay}>
+          <View style={[styles.modalBox, { backgroundColor: '#ffcccc' }]}> 
+            <Text style={[styles.modalTitle, { color: '#990000' }]}>An error occurred!</Text>
+            <View style={styles.modalButtons}>
+              <Button title="Fix it" onPress={() => { setErrorVisible(false); Alert.alert('Fixing…'); }} />
+              <Button title="Ignore it" onPress={() => setErrorVisible(false)} />
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Loading Modal */}
+      <Modal visible={loadingVisible} transparent animationType="fade">
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalBox}>
+            <ActivityIndicator size="large" color="#0000ff" />
+            <Text>Loading data...</Text>
+          </View>
+        </View>
+      </Modal>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-evenly',
+    padding: 20,
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalBox: {
+    width: 300,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+});
