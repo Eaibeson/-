@@ -1,0 +1,36 @@
+import React, { useState } from 'react';
+import { View, Button, StyleSheet } from 'react-native';
+import RowLayoutScreen from './components/RowLayoutScreen';
+import ColumnLayoutScreen from './components/ColumnLayoutScreen';
+import GridLayoutScreen from './components/GridLayoutScreen';
+
+export default function App() {
+  const [layoutIndex, setLayoutIndex] = useState(0);
+
+  const renderLayout = () => {
+    switch (layoutIndex) {
+      case 0:
+        return <RowLayoutScreen />;
+      case 1:
+        return <ColumnLayoutScreen />;
+      case 2:
+        return <GridLayoutScreen />;
+      default:
+        return <RowLayoutScreen />;
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      {renderLayout()}
+      <Button title="Switch Layout" onPress={() => setLayoutIndex((layoutIndex + 1) % 3)} />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+});
