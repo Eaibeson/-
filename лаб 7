@@ -1,0 +1,43 @@
+
+import React from 'react';
+import { Button } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from './components/HomeScreen';
+import DetailsScreen from './components/DetailsScreen';
+import ProfileScreen from './components/ProfileScreen';
+import ItemListScreen from './components/ItemListScreen';
+import LocationScreen from './components/LocationScreen';
+import UserInputScreen from './components/UserInputScreen';
+import TouchFeedbackScreen from './components/TouchFeedbackScreen';
+import ScrollExampleScreen from './components/ScrollExampleScreen';
+import SwipeListScreen from './components/SwipeListScreen';
+
+const Stack = createNativeStackNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen 
+          name="Details" 
+          component={DetailsScreen} 
+          options={{
+            title: 'Details Page',
+            headerRight: () => (
+              <Button title="Info" onPress={() => alert('More info')} />
+            ),
+          }}
+        />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="Items" component={ItemListScreen} />
+        <Stack.Screen name="Location" component={LocationScreen} />
+        <Stack.Screen name="Input" component={UserInputScreen} />
+        <Stack.Screen name="TouchFeedback" component={TouchFeedbackScreen} />
+        <Stack.Screen name="ScrollExample" component={ScrollExampleScreen} />
+        <Stack.Screen name="SwipeList" component={SwipeListScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
