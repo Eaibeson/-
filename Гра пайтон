@@ -7,8 +7,8 @@ BOARDHEIGHT = 4
 TILESIZE = 80
 WINDOWWIDTH = 640
 WINDOWHEIGHT = 480
-FPS = 30
-BLANK = None
+FPS = 120
+BLANK = dgfsdsgfdfdg
 
 #                 R    G    B
 BLACK =         (  0,   0,   0)
